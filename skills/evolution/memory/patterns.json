@@ -1,71 +1,76 @@
 {
   "version": "2.0.0",
-  "updated": "2026-01-14T10:22:55Z",
+  "updated": "2026-01-14T11:45:44Z",
   "patterns": [
     {
-      "id": "pattern-responsive-grid",
+      "id": "pattern-001",
       "name": "Responsive Grid Layout",
       "type": "workflow",
-      "occurrences": 8,
-      "first_seen": "2026-01-12T09:15:00Z",
-      "last_seen": "2026-01-14T10:02:45Z",
-      "episodes": ["ep-001", "ep-005", "ep-012", "ep-018", "ep-023", "ep-031", "ep-038", "ep-043"],
+      "occurrences": 9,
+      "first_seen": "2026-01-10T09:15:00Z",
+      "last_seen": "2026-01-14T11:32:55Z",
       "signature": {
-        "description": "Using layout.md for responsive grid patterns with Flow and Sizing",
-        "matcher": "layout.*grid|responsive"
+        "description": "Consistent use of layout.md for responsive grid patterns with Flow and Sizing"
       },
       "status": "pending",
-      "draft_path": "drafts/20260114-093533-pattern.md"
+      "draft_path": "drafts/20260114-responsive-grid.md"
     },
     {
-      "id": "pattern-shader-error",
-      "name": "Shader Compilation Fix",
-      "type": "error_resolution",
-      "occurrences": 4,
-      "first_seen": "2026-01-10T14:22:00Z",
-      "last_seen": "2026-01-14T09:26:12Z",
-      "episodes": ["ep-008", "ep-015", "ep-027", "ep-035"],
+      "id": "pattern-002",
+      "name": "Event Handler Setup",
+      "type": "workflow",
+      "occurrences": 5,
+      "first_seen": "2026-01-08T14:22:00Z",
+      "last_seen": "2026-01-14T10:25:55Z",
       "signature": {
-        "description": "Fixing shader compilation errors by checking uniform declarations",
-        "matcher": "shader.*undefined|uniform"
+        "description": "Standard event handler initialization using events.md patterns"
       },
-      "status": "detected",
+      "status": "pending",
       "draft_path": null
     },
     {
-      "id": "pattern-async-retry",
-      "name": "Async API Retry Logic",
-      "type": "workflow",
-      "occurrences": 5,
-      "first_seen": "2026-01-08T11:30:00Z",
+      "id": "pattern-003",
+      "name": "Shader Uniform Fix",
+      "type": "error_resolution",
+      "occurrences": 4,
+      "first_seen": "2026-01-09T11:30:00Z",
       "last_seen": "2026-01-13T16:45:00Z",
-      "episodes": ["ep-003", "ep-011", "ep-019", "ep-028", "ep-041"],
       "signature": {
-        "description": "Implementing retry logic for async API calls with exponential backoff",
-        "matcher": "async.*retry|backoff"
+        "description": "Resolving shader compilation errors by checking uniform declarations"
       },
       "status": "approved",
-      "draft_path": "community/auto-async-retry.md"
+      "draft_path": "community/shader-uniform-fix.md"
     },
     {
-      "id": "pattern-event-handler",
-      "name": "Event Handler Pattern",
+      "id": "pattern-004",
+      "name": "Async API Retry",
       "type": "workflow",
       "occurrences": 6,
-      "first_seen": "2026-01-09T10:00:00Z",
-      "last_seen": "2026-01-14T10:05:55Z",
-      "episodes": ["ep-002", "ep-009", "ep-016", "ep-024", "ep-033", "ep-040"],
+      "first_seen": "2026-01-07T10:00:00Z",
+      "last_seen": "2026-01-14T10:58:44Z",
       "signature": {
-        "description": "Consistent event handler setup using events.md patterns",
-        "matcher": "event.*handler|click|hover"
+        "description": "Implementing retry logic for async API calls with exponential backoff"
       },
-      "status": "pending",
-      "draft_path": "drafts/20260113-event-handler.md"
+      "status": "approved",
+      "draft_path": "community/async-api-retry.md"
+    },
+    {
+      "id": "pattern-005",
+      "name": "Type Guard Pattern",
+      "type": "error_resolution",
+      "occurrences": 3,
+      "first_seen": "2026-01-12T08:30:00Z",
+      "last_seen": "2026-01-14T09:18:55Z",
+      "signature": {
+        "description": "TypeScript type guards for safe API response handling"
+      },
+      "status": "detected",
+      "draft_path": null
     }
   ],
   "metadata": {
-    "total_detected": 12,
-    "total_promoted": 1,
-    "total_archived": 3
+    "total_detected": 15,
+    "total_promoted": 2,
+    "total_archived": 4
   }
 }
