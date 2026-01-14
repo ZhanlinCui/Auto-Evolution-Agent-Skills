@@ -1,0 +1,71 @@
+{
+  "version": "2.0.0",
+  "updated": "2026-01-14T10:22:55Z",
+  "patterns": [
+    {
+      "id": "pattern-responsive-grid",
+      "name": "Responsive Grid Layout",
+      "type": "workflow",
+      "occurrences": 8,
+      "first_seen": "2026-01-12T09:15:00Z",
+      "last_seen": "2026-01-14T10:02:45Z",
+      "episodes": ["ep-001", "ep-005", "ep-012", "ep-018", "ep-023", "ep-031", "ep-038", "ep-043"],
+      "signature": {
+        "description": "Using layout.md for responsive grid patterns with Flow and Sizing",
+        "matcher": "layout.*grid|responsive"
+      },
+      "status": "pending",
+      "draft_path": "drafts/20260114-093533-pattern.md"
+    },
+    {
+      "id": "pattern-shader-error",
+      "name": "Shader Compilation Fix",
+      "type": "error_resolution",
+      "occurrences": 4,
+      "first_seen": "2026-01-10T14:22:00Z",
+      "last_seen": "2026-01-14T09:26:12Z",
+      "episodes": ["ep-008", "ep-015", "ep-027", "ep-035"],
+      "signature": {
+        "description": "Fixing shader compilation errors by checking uniform declarations",
+        "matcher": "shader.*undefined|uniform"
+      },
+      "status": "detected",
+      "draft_path": null
+    },
+    {
+      "id": "pattern-async-retry",
+      "name": "Async API Retry Logic",
+      "type": "workflow",
+      "occurrences": 5,
+      "first_seen": "2026-01-08T11:30:00Z",
+      "last_seen": "2026-01-13T16:45:00Z",
+      "episodes": ["ep-003", "ep-011", "ep-019", "ep-028", "ep-041"],
+      "signature": {
+        "description": "Implementing retry logic for async API calls with exponential backoff",
+        "matcher": "async.*retry|backoff"
+      },
+      "status": "approved",
+      "draft_path": "community/auto-async-retry.md"
+    },
+    {
+      "id": "pattern-event-handler",
+      "name": "Event Handler Pattern",
+      "type": "workflow",
+      "occurrences": 6,
+      "first_seen": "2026-01-09T10:00:00Z",
+      "last_seen": "2026-01-14T10:05:55Z",
+      "episodes": ["ep-002", "ep-009", "ep-016", "ep-024", "ep-033", "ep-040"],
+      "signature": {
+        "description": "Consistent event handler setup using events.md patterns",
+        "matcher": "event.*handler|click|hover"
+      },
+      "status": "pending",
+      "draft_path": "drafts/20260113-event-handler.md"
+    }
+  ],
+  "metadata": {
+    "total_detected": 12,
+    "total_promoted": 1,
+    "total_archived": 3
+  }
+}

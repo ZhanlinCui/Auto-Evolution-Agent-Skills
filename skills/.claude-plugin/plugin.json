@@ -1,0 +1,28 @@
+{
+  "name": "auto-evolution-agent-skills",
+  "version": "0.1.0",
+  "description": "Event-sourced auto-evolution layer for Agent Skills. Tracks usage and failures, drafts learnings, queues validation, and produces evidence-based improvement suggestions.",
+  "author": {
+    "name": "Auto-Evolution",
+    "url": "https://github.com/ZhanlinCui"
+  },
+  "repository": "https://github.com/ZhanlinCui/Auto-Evolution-Agent-Skills",
+  "license": "MIT",
+  "keywords": [
+    "agent",
+    "skills",
+    "auto-evolution",
+    "self-learning",
+    "knowledge-capture",
+    "event-sourcing",
+    "validation",
+    "recommendations",
+    "drafts",
+    "hooks",
+    "observability",
+    "workflow",
+    "lint",
+    "postmortem",
+    "troubleshooting"
+  ]
+}

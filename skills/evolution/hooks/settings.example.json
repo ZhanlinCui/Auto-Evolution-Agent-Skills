@@ -1,0 +1,37 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Read|Write|Edit|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/skills/evolution/hooks/capture.sh \"$TOOL_NAME\" \"$TOOL_INPUT\""
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/skills/evolution/hooks/capture.sh post-bash \"$TOOL_OUTPUT\" \"$EXIT_CODE\""
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/skills/evolution/hooks/reflect.sh"
+          }
+        ]
+      }
+    ]
+  }
+}

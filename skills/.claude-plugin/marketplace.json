@@ -1,0 +1,15 @@
+{
+  "name": "auto-evolution-agent-skills",
+  "owner": {
+    "name": "Auto-Evolution",
+    "url": "https://github.com/ZhanlinCui"
+  },
+  "plugins": [
+    {
+      "name": "auto-evolution-agent-skills",
+      "source": "./",
+      "description": "Event-sourced auto-evolution layer for Agent Skills",
+      "version": "0.1.0"
+    }
+  ]
+}

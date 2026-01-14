@@ -1,0 +1,52 @@
+{
+  "project_name_en": "Auto-Evolution Agent Skills",
+  "project_name_zh": "Auto-Evolution Agent Skills",
+  "tagline_en": "Evidence-driven auto-evolution layer for Agent Skills.",
+  "tagline_zh": "面向 Agent Skills 的证据驱动自动进化层。",
+  "overview_en": "Auto-Evolution Agent Skills adds a low-noise learning loop to any skills library. It captures real usage, drafts reusable knowledge, and produces actionable improvement notes without heavy processing.",
+  "overview_zh": "Auto-Evolution Agent Skills 为任意技能库提供低噪声学习闭环，基于真实使用生成草稿和可执行的改进建议，并保持极低运行开销。",
+  "features_en": [
+    "Event stream with session-local summaries for fast analysis",
+    "Context filters (TTL + ignore/force patterns) to reduce false positives",
+    "Auto drafts for failures and session insights",
+    "Validation queue for risky or outdated guidance"
+  ],
+  "features_zh": [
+    "事件流 + 会话摘要，快速生成改进线索",
+    "上下文过滤（TTL + 忽略/强制规则）降低误报",
+    "失败与会话收尾自动生成草稿",
+    "验证队列用于复查高风险指导"
+  ],
+  "components_en": [
+    "hooks (skills/99-evolution/hooks)",
+    "configuration (skills/99-evolution/config.json)",
+    "drafts (skills/99-evolution/drafts)",
+    "reports (skills/99-evolution/reports)",
+    "validation queue (skills/99-evolution/validation)"
+  ],
+  "components_zh": [
+    "hooks（skills/99-evolution/hooks）",
+    "配置（skills/99-evolution/config.json）",
+    "草稿（skills/99-evolution/drafts）",
+    "报告（skills/99-evolution/reports）",
+    "验证队列（skills/99-evolution/validation）"
+  ],
+  "quick_start_en": [
+    "cp -r skills/99-evolution your-project/.claude/skills/99-evolution",
+    "cp -r your-project/.claude/skills/99-evolution/hooks your-project/.claude/skills/hooks",
+    "chmod +x your-project/.claude/skills/hooks/*.sh",
+    "merge settings.example.json into .claude/settings.json",
+    "edit skills/99-evolution/config.json"
+  ],
+  "quick_start_zh": [
+    "cp -r skills/99-evolution your-project/.claude/skills/99-evolution",
+    "cp -r your-project/.claude/skills/99-evolution/hooks your-project/.claude/skills/hooks",
+    "chmod +x your-project/.claude/skills/hooks/*.sh",
+    "合并 settings.example.json 到 .claude/settings.json",
+    "修改 skills/99-evolution/config.json"
+  ],
+  "license": "MIT",
+  "python_version": "",
+  "credits_en": "",
+  "credits_zh": ""
+}

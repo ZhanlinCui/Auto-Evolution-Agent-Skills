@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto-Evolution Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-tertiary: #1a1a24;
+            --bg-card: #16161f;
+            --border-color: #2a2a3a;
+            --text-primary: #e8e8ed;
+            --text-secondary: #8888a0;
+            --text-muted: #5a5a70;
+            --accent-primary: #6366f1;
+            --accent-secondary: #8b5cf6;
+            --accent-tertiary: #06b6d4;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #06b6d4 100%);
+            --gradient-glow: radial-gradient(ellipse at 50% 0%, rgba(99, 102, 241, 0.15) 0%, transparent 60%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                var(--gradient-glow),
+                radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 20% 60%, rgba(6, 182, 212, 0.06) 0%, transparent 40%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 48px;
+            animation: fadeInDown 0.6s ease-out;
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.3);
+        }
+
+        .logo-text {
+            font-size: 28px;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 16px;
+            margin-bottom: 24px;
+        }
+
+        .session-info {
+            display: inline-flex;
+            align-items: center;
+            gap: 16px;
+            padding: 12px 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 100px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+        }
+
+        .session-id {
+            color: var(--accent-tertiary);
+        }
+
+        .session-time {
+            color: var(--text-muted);
+        }
+
+        .live-indicator {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--success);
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s ease-out both;
+        }
+
+        .stat-card:nth-child(1) { animation-delay: 0.1s; }
+        .stat-card:nth-child(2) { animation-delay: 0.15s; }
+        .stat-card:nth-child(3) { animation-delay: 0.2s; }
+        .stat-card:nth-child(4) { animation-delay: 0.25s; }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-primary);
+            box-shadow: 0 12px 40px rgba(99, 102, 241, 0.15);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .stat-card:hover::before {
+            opacity: 1;
+        }
+
+        .stat-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin-bottom: 16px;
+        }
+
+        .stat-icon.purple { background: rgba(99, 102, 241, 0.15); }
+        .stat-icon.cyan { background: rgba(6, 182, 212, 0.15); }
+        .stat-icon.green { background: rgba(16, 185, 129, 0.15); }
+        .stat-icon.orange { background: rgba(245, 158, 11, 0.15); }
+
+        .stat-value {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .stat-trend {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+
+        .stat-trend.up {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--success);
+        }
+
+        .stat-trend.down {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--danger);
+        }
+
+        /* Main Grid */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            animation: fadeInUp 0.6s ease-out both;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-badge {
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 100px;
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--accent-primary);
+            font-weight: 500;
+        }
+
+        /* Memory Visualization */
+        .memory-layers {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .memory-layer {
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .memory-layer:hover {
+            background: var(--bg-secondary);
+            transform: translateX(4px);
+        }
+
+        .memory-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .memory-icon.episodic { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
+        .memory-icon.semantic { background: linear-gradient(135deg, #06b6d4, #0891b2); }
+        .memory-icon.procedural { background: linear-gradient(135deg, #10b981, #059669); }
+
+        .memory-info {
+            flex: 1;
+        }
+
+        .memory-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .memory-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .memory-count {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--accent-primary);
+        }
+
+        /* Skill Usage Chart */
+        .skill-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .skill-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .skill-name {
+            width: 120px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .skill-track {
+            flex: 1;
+            height: 8px;
+            background: var(--bg-tertiary);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .skill-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 1s ease-out;
+        }
+
+        .skill-value {
+            width: 36px;
+            text-align: right;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* Pattern Detection */
+        .patterns-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .pattern-item {
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+            padding: 16px;
+            border-left: 3px solid var(--accent-primary);
+            transition: all 0.3s ease;
+        }
+
+        .pattern-item:hover {
+            background: var(--bg-secondary);
+        }
+
+        .pattern-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .pattern-name {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .pattern-count {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            padding: 4px 10px;
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--accent-primary);
+            border-radius: 100px;
+        }
+
+        .pattern-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .pattern-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: var(--accent-tertiary);
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .pattern-action:hover {
+            color: var(--text-primary);
+        }
+
+        /* Evolution Progress */
+        .evolution-progress {
+            margin-bottom: 24px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .progress-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .progress-value {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent-primary);
+        }
+
+        .progress-track {
+            height: 12px;
+            background: var(--bg-tertiary);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 6px;
+            transition: width 1.5s ease-out;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 24px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 20px;
+        }
+
+        .timeline-item:last-child {
+            padding-bottom: 0;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -20px;
+            top: 4px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid var(--bg-card);
+        }
+
+        .timeline-dot.success { background: var(--success); }
+        .timeline-dot.error { background: var(--danger); }
+        .timeline-dot.info { background: var(--accent-primary); }
+
+        .timeline-content {
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            padding: 12px 16px;
+        }
+
+        .timeline-title {
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .timeline-time {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Suggestions */
+        .suggestions-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .suggestion-item {
+            display: flex;
+            gap: 12px;
+            padding: 16px;
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .suggestion-item:hover {
+            background: var(--bg-secondary);
+        }
+
+        .suggestion-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .suggestion-icon.high { background: rgba(239, 68, 68, 0.15); }
+        .suggestion-icon.medium { background: rgba(245, 158, 11, 0.15); }
+        .suggestion-icon.low { background: rgba(16, 185, 129, 0.15); }
+
+        .suggestion-content {
+            flex: 1;
+        }
+
+        .suggestion-title {
+            font-weight: 500;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .suggestion-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding-top: 32px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        .footer a {
+            color: var(--accent-primary);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .session-info {
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 48px 24px;
+            color: var(--text-muted);
+        }
+
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        .empty-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .empty-desc {
+            font-size: 14px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-pattern"></div>
+    <div class="grid-overlay"></div>
+    
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">🧠</div>
+                <span class="logo-text">Auto-Evolution</span>
+            </div>
+            <p class="subtitle">Memory-Driven Self-Evolution for Agent Skills</p>
+            <div class="session-info">
+                <span class="session-id" id="sessionId">Session: loading...</span>
+                <span class="session-time" id="sessionTime">--</span>
+                <span class="live-indicator">
+                    <span class="live-dot"></span>
+                    Live
+                </span>
+            </div>
+        </header>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon purple">📚</div>
+                <div class="stat-value" id="skillsUsed">0</div>
+                <div class="stat-label">Skills Used</div>
+                <div class="stat-trend up" id="skillsTrend">+0 today</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon cyan">🧠</div>
+                <div class="stat-value" id="episodesCount">0</div>
+                <div class="stat-label">Episodes Captured</div>
+                <div class="stat-trend up">Active</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon green">⚡</div>
+                <div class="stat-value" id="patternsCount">0</div>
+                <div class="stat-label">Patterns Detected</div>
+                <div class="stat-trend up" id="patternsTrend">+0 new</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon orange">🎯</div>
+                <div class="stat-value" id="successRate">--%</div>
+                <div class="stat-label">Success Rate</div>
+                <div class="stat-trend up">Healthy</div>
+            </div>
+        </div>
+
+        <!-- Main Grid -->
+        <div class="main-grid">
+            <!-- Left Column -->
+            <div class="card" style="animation-delay: 0.3s;">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        🧠 Memory System
+                        <span class="card-badge">3-Layer</span>
+                    </h2>
+                </div>
+                
+                <div class="memory-layers">
+                    <div class="memory-layer">
+                        <div class="memory-icon episodic">📝</div>
+                        <div class="memory-info">
+                            <div class="memory-name">Episodic Memory</div>
+                            <div class="memory-desc">Raw events • TTL: 7 days</div>
+                        </div>
+                        <div class="memory-count" id="episodicCount">0</div>
+                    </div>
+                    <div class="memory-layer">
+                        <div class="memory-icon semantic">🔗</div>
+                        <div class="memory-info">
+                            <div class="memory-name">Semantic Memory</div>
+                            <div class="memory-desc">Abstracted patterns • TTL: 30 days</div>
+                        </div>
+                        <div class="memory-count" id="semanticCount">0</div>
+                    </div>
+                    <div class="memory-layer">
+                        <div class="memory-icon procedural">📦</div>
+                        <div class="memory-info">
+                            <div class="memory-name">Procedural Memory</div>
+                            <div class="memory-desc">Skill drafts • Permanent</div>
+                        </div>
+                        <div class="memory-count" id="proceduralCount">0</div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 32px;">
+                    <div class="card-header">
+                        <h3 class="card-title">📊 Skill Usage</h3>
+                    </div>
+                    <div class="skill-bars" id="skillBars">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="card" style="animation-delay: 0.35s;">
+                <div class="card-header">
+                    <h2 class="card-title">🚀 Evolution Progress</h2>
+                </div>
+                
+                <div class="evolution-progress">
+                    <div class="progress-header">
+                        <span class="progress-label">Next Milestone</span>
+                        <span class="progress-value" id="progressValue">0/10 patterns</span>
+                    </div>
+                    <div class="progress-track">
+                        <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
+                    </div>
+                </div>
+
+                <div class="card-header" style="margin-top: 24px;">
+                    <h3 class="card-title">⚡ Detected Patterns</h3>
+                </div>
+                <div class="patterns-list" id="patternsList">
+                    <div class="empty-state">
+                        <div class="empty-icon">🔍</div>
+                        <div class="empty-title">No patterns yet</div>
+                        <div class="empty-desc">Patterns will appear here when similar actions repeat 3+ times</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Secondary Grid -->
+        <div class="main-grid">
+            <div class="card" style="animation-delay: 0.4s;">
+                <div class="card-header">
+                    <h2 class="card-title">📈 Recent Activity</h2>
+                </div>
+                <div class="timeline" id="timeline">
+                    <div class="empty-state">
+                        <div class="empty-icon">📭</div>
+                        <div class="empty-title">No activity yet</div>
+                        <div class="empty-desc">Start using skills to see your activity timeline</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="animation-delay: 0.45s;">
+                <div class="card-header">
+                    <h2 class="card-title">💡 Suggestions</h2>
+                </div>
+                <div class="suggestions-list" id="suggestionsList">
+                    <div class="suggestion-item">
+                        <div class="suggestion-icon medium">💡</div>
+                        <div class="suggestion-content">
+                            <div class="suggestion-title">Start tracking</div>
+                            <div class="suggestion-desc">Use Claude Code normally and the system will learn from your patterns</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Auto-Evolution v2.0.0 • <a href="https://github.com/ZhanlinCui/Auto-Evolution-Agent-Skills" target="_blank">GitHub</a> • MIT License</p>
+        </footer>
+    </div>
+
+    <script>
+        // Dashboard Data Loader
+        class EvolutionDashboard {
+            constructor() {
+                this.episodesPath = '../memory/episodes.jsonl';
+                this.patternsPath = '../memory/patterns.json';
+                this.configPath = '../config.json';
+                this.init();
+            }
+
+            async init() {
+                this.updateSessionInfo();
+                await this.loadData();
+                this.startAutoRefresh();
+            }
+
+            updateSessionInfo() {
+                const now = new Date();
+                const sessionId = `session-${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}`;
+                document.getElementById('sessionId').textContent = `Session: ${sessionId}`;
+                document.getElementById('sessionTime').textContent = now.toLocaleString();
+            }
+
+            async loadData() {
+                try {
+                    // Try to load episodes
+                    const episodes = await this.loadEpisodes();
+                    const patterns = await this.loadPatterns();
+                    this.render(episodes, patterns);
+                } catch (e) {
+                    console.log('Using demo data for visualization');
+                    this.renderDemo();
+                }
+            }
+
+            async loadEpisodes() {
+                try {
+                    const response = await fetch(this.episodesPath);
+                    const text = await response.text();
+                    return text.trim().split('\n').filter(l => l).map(l => JSON.parse(l));
+                } catch {
+                    return [];
+                }
+            }
+
+            async loadPatterns() {
+                try {
+                    const response = await fetch(this.patternsPath);
+                    return await response.json();
+                } catch {
+                    return { patterns: [] };
+                }
+            }
+
+            render(episodes, patterns) {
+                // Update stats
+                const skillEvents = episodes.filter(e => e.type === 'skill_used' || e.type === 'skill_updated');
+                const uniqueSkills = [...new Set(skillEvents.map(e => e.skill))];
+                const failedCommands = episodes.filter(e => e.type === 'command_failed' && e.status === 'fail');
+                const successCommands = episodes.filter(e => e.type === 'command_started');
+                
+                document.getElementById('skillsUsed').textContent = uniqueSkills.length;
+                document.getElementById('episodesCount').textContent = episodes.length;
+                document.getElementById('patternsCount').textContent = patterns.patterns?.length || 0;
+                
+                const successRate = successCommands.length > 0 
+                    ? Math.round((1 - failedCommands.length / successCommands.length) * 100)
+                    : 100;
+                document.getElementById('successRate').textContent = `${successRate}%`;
+
+                // Memory counts
+                document.getElementById('episodicCount').textContent = episodes.length;
+                document.getElementById('semanticCount').textContent = patterns.patterns?.length || 0;
+                document.getElementById('proceduralCount').textContent = 
+                    patterns.patterns?.filter(p => p.status === 'approved').length || 0;
+
+                // Skill bars
+                this.renderSkillBars(skillEvents);
+
+                // Progress
+                const patternCount = patterns.patterns?.length || 0;
+                const progress = Math.min(patternCount / 10 * 100, 100);
+                document.getElementById('progressFill').style.width = `${progress}%`;
+                document.getElementById('progressValue').textContent = `${patternCount}/10 patterns`;
+
+                // Patterns list
+                if (patterns.patterns?.length > 0) {
+                    this.renderPatterns(patterns.patterns);
+                }
+
+                // Timeline
+                if (episodes.length > 0) {
+                    this.renderTimeline(episodes.slice(-5).reverse());
+                }
+
+                // Suggestions
+                this.renderSuggestions(episodes, patterns);
+            }
+
+            renderDemo() {
+                // Demo data for visualization
+                const demoSkills = [
+                    { name: 'layout.md', count: 12 },
+                    { name: 'events.md', count: 8 },
+                    { name: 'styling.md', count: 6 },
+                    { name: 'widgets.md', count: 4 },
+                    { name: 'patterns.md', count: 3 }
+                ];
+
+                document.getElementById('skillsUsed').textContent = '5';
+                document.getElementById('episodesCount').textContent = '47';
+                document.getElementById('patternsCount').textContent = '3';
+                document.getElementById('successRate').textContent = '94%';
+                document.getElementById('episodicCount').textContent = '47';
+                document.getElementById('semanticCount').textContent = '3';
+                document.getElementById('proceduralCount').textContent = '1';
+                document.getElementById('progressFill').style.width = '30%';
+                document.getElementById('progressValue').textContent = '3/10 patterns';
+
+                const barsHtml = demoSkills.map((skill, i) => {
+                    const colors = ['#6366f1', '#8b5cf6', '#06b6d4', '#10b981', '#f59e0b'];
+                    const maxCount = Math.max(...demoSkills.map(s => s.count));
+                    const width = (skill.count / maxCount) * 100;
+                    return `
+                        <div class="skill-bar">
+                            <span class="skill-name">${skill.name}</span>
+                            <div class="skill-track">
+                                <div class="skill-fill" style="width: ${width}%; background: ${colors[i]}"></div>
+                            </div>
+                            <span class="skill-value">${skill.count}</span>
+                        </div>
+                    `;
+                }).join('');
+                document.getElementById('skillBars').innerHTML = barsHtml;
+
+                // Demo patterns
+                document.getElementById('patternsList').innerHTML = `
+                    <div class="pattern-item">
+                        <div class="pattern-header">
+                            <span class="pattern-name">API Error Retry</span>
+                            <span class="pattern-count">4 occurrences</span>
+                        </div>
+                        <p class="pattern-desc">Detected pattern for handling API failures with exponential backoff</p>
+                        <span class="pattern-action">→ Create Skill</span>
+                    </div>
+                    <div class="pattern-item">
+                        <div class="pattern-header">
+                            <span class="pattern-name">TypeScript Type Guard</span>
+                            <span class="pattern-count">3 occurrences</span>
+                        </div>
+                        <p class="pattern-desc">Type narrowing pattern for safe property access</p>
+                        <span class="pattern-action">→ Create Skill</span>
+                    </div>
+                `;
+
+                // Demo timeline
+                document.getElementById('timeline').innerHTML = `
+                    <div class="timeline-item">
+                        <div class="timeline-dot success"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">Used layout.md for responsive grid</div>
+                            <div class="timeline-time">2 minutes ago</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot info"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">Pattern detected: API Error Retry</div>
+                            <div class="timeline-time">5 minutes ago</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot error"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">Fixed: TypeScript compilation error</div>
+                            <div class="timeline-time">12 minutes ago</div>
+                        </div>
+                    </div>
+                `;
+
+                // Demo suggestions
+                document.getElementById('suggestionsList').innerHTML = `
+                    <div class="suggestion-item">
+                        <div class="suggestion-icon high">🔥</div>
+                        <div class="suggestion-content">
+                            <div class="suggestion-title">Promote "API Error Retry" to skill</div>
+                            <div class="suggestion-desc">This pattern has been validated 4 times</div>
+                        </div>
+                    </div>
+                    <div class="suggestion-item">
+                        <div class="suggestion-icon medium">📊</div>
+                        <div class="suggestion-content">
+                            <div class="suggestion-title">High usage: layout.md</div>
+                            <div class="suggestion-desc">Consider extracting sub-patterns for reuse</div>
+                        </div>
+                    </div>
+                    <div class="suggestion-item">
+                        <div class="suggestion-icon low">✨</div>
+                        <div class="suggestion-content">
+                            <div class="suggestion-title">Session health: Excellent</div>
+                            <div class="suggestion-desc">94% command success rate this session</div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            renderSkillBars(skillEvents) {
+                const skillCounts = {};
+                skillEvents.forEach(e => {
+                    const name = e.skill?.split('/').pop() || 'unknown';
+                    skillCounts[name] = (skillCounts[name] || 0) + 1;
+                });
+
+                const sorted = Object.entries(skillCounts)
+                    .sort((a, b) => b[1] - a[1])
+                    .slice(0, 5);
+
+                if (sorted.length === 0) {
+                    document.getElementById('skillBars').innerHTML = `
+                        <div class="empty-state" style="padding: 24px;">
+                            <div class="empty-desc">No skills used yet</div>
+                        </div>
+                    `;
+                    return;
+                }
+
+                const maxCount = sorted[0][1];
+                const colors = ['#6366f1', '#8b5cf6', '#06b6d4', '#10b981', '#f59e0b'];
+                
+                const html = sorted.map(([name, count], i) => {
+                    const width = (count / maxCount) * 100;
+                    return `
+                        <div class="skill-bar">
+                            <span class="skill-name">${name}</span>
+                            <div class="skill-track">
+                                <div class="skill-fill" style="width: ${width}%; background: ${colors[i % colors.length]}"></div>
+                            </div>
+                            <span class="skill-value">${count}</span>
+                        </div>
+                    `;
+                }).join('');
+
+                document.getElementById('skillBars').innerHTML = html;
+            }
+
+            renderPatterns(patterns) {
+                const html = patterns.slice(0, 3).map(p => `
+                    <div class="pattern-item">
+                        <div class="pattern-header">
+                            <span class="pattern-name">${p.name}</span>
+                            <span class="pattern-count">${p.occurrences} occurrences</span>
+                        </div>
+                        <p class="pattern-desc">${p.signature?.description || 'Pattern detected from repeated actions'}</p>
+                        <span class="pattern-action">→ Create Skill</span>
+                    </div>
+                `).join('');
+
+                document.getElementById('patternsList').innerHTML = html || document.getElementById('patternsList').innerHTML;
+            }
+
+            renderTimeline(events) {
+                const html = events.map(e => {
+                    const dotClass = e.status === 'fail' ? 'error' : 
+                                    e.type.includes('pattern') ? 'info' : 'success';
+                    const time = new Date(e.ts).toLocaleTimeString();
+                    const title = this.formatEventTitle(e);
+                    return `
+                        <div class="timeline-item">
+                            <div class="timeline-dot ${dotClass}"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">${title}</div>
+                                <div class="timeline-time">${time}</div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                document.getElementById('timeline').innerHTML = html || document.getElementById('timeline').innerHTML;
+            }
+
+            formatEventTitle(event) {
+                switch(event.type) {
+                    case 'skill_used': return `Used ${event.skill}`;
+                    case 'skill_updated': return `Updated ${event.skill}`;
+                    case 'command_failed': return `Error: ${event.detail?.slice(0, 50) || 'Command failed'}`;
+                    case 'draft_created': return `Draft created: ${event.detail}`;
+                    default: return event.type;
+                }
+            }
+
+            renderSuggestions(episodes, patterns) {
+                const suggestions = [];
+                
+                // High-use skills
+                const skillCounts = {};
+                episodes.filter(e => e.type === 'skill_used').forEach(e => {
+                    skillCounts[e.skill] = (skillCounts[e.skill] || 0) + 1;
+                });
+                
+                Object.entries(skillCounts).forEach(([skill, count]) => {
+                    if (count >= 5) {
+                        suggestions.push({
+                            icon: 'medium',
+                            emoji: '📊',
+                            title: `High usage: ${skill.split('/').pop()}`,
+                            desc: `Used ${count} times - consider extracting sub-patterns`
+                        });
+                    }
+                });
+
+                // Patterns ready for promotion
+                patterns.patterns?.forEach(p => {
+                    if (p.occurrences >= 3 && p.status !== 'approved') {
+                        suggestions.push({
+                            icon: 'high',
+                            emoji: '🔥',
+                            title: `Promote "${p.name}" to skill`,
+                            desc: `Validated ${p.occurrences} times`
+                        });
+                    }
+                });
+
+                // Success rate
+                const commands = episodes.filter(e => e.type === 'command_started').length;
+                const failures = episodes.filter(e => e.status === 'fail').length;
+                const rate = commands > 0 ? Math.round((1 - failures/commands) * 100) : 100;
+                
+                suggestions.push({
+                    icon: rate >= 90 ? 'low' : rate >= 70 ? 'medium' : 'high',
+                    emoji: rate >= 90 ? '✨' : rate >= 70 ? '⚠️' : '🚨',
+                    title: `Session health: ${rate >= 90 ? 'Excellent' : rate >= 70 ? 'Good' : 'Needs attention'}`,
+                    desc: `${rate}% command success rate`
+                });
+
+                if (suggestions.length > 0) {
+                    const html = suggestions.slice(0, 4).map(s => `
+                        <div class="suggestion-item">
+                            <div class="suggestion-icon ${s.icon}">${s.emoji}</div>
+                            <div class="suggestion-content">
+                                <div class="suggestion-title">${s.title}</div>
+                                <div class="suggestion-desc">${s.desc}</div>
+                            </div>
+                        </div>
+                    `).join('');
+                    document.getElementById('suggestionsList').innerHTML = html;
+                }
+            }
+
+            startAutoRefresh() {
+                setInterval(() => {
+                    this.updateSessionInfo();
+                    this.loadData();
+                }, 30000); // Refresh every 30 seconds
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            new EvolutionDashboard();
+        });
+    </script>
+</body>
+</html>

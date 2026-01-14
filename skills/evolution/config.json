@@ -1,0 +1,58 @@
+{
+  "version": "2.0.0",
+  
+  "memory": {
+    "episodic_ttl_days": 7,
+    "semantic_ttl_days": 30,
+    "pattern_threshold": 3,
+    "max_episodes": 1000
+  },
+  
+  "capture": {
+    "skill_context_ttl_seconds": 900,
+    "max_output_lines": 200,
+    "ignore_exit_codes": [1],
+    "ignore_command_patterns": "(^|\\s)(rg|grep|test|\\[)(\\s|$)",
+    "ignore_output_patterns": "^$|no matches found",
+    "force_output_patterns": "error|fatal|panic|traceback|exception"
+  },
+  
+  "evolution": {
+    "auto_draft_on_error": true,
+    "auto_draft_on_session_end": true,
+    "auto_pattern_detection": true,
+    "require_validation": true,
+    "min_occurrences_for_pattern": 3,
+    "min_validations_for_promotion": 2
+  },
+  
+  "quality_gates": {
+    "draft_to_pending": {
+      "min_occurrences": 3,
+      "success_rate": 0.7,
+      "auto_promote": true
+    },
+    "pending_to_approved": {
+      "min_validations": 2,
+      "cross_project_test": false
+    },
+    "approved_to_skill": {
+      "min_usage_count": 5
+    }
+  },
+  
+  "deprecation": {
+    "unused_days": 30,
+    "failure_rate_threshold": 0.5,
+    "action": "archive"
+  },
+  
+  "dashboard": {
+    "auto_open": false,
+    "theme": "dark",
+    "refresh_interval_ms": 5000
+  },
+  
+  "author": "your-github-handle",
+  "source": "your-project"
+}
