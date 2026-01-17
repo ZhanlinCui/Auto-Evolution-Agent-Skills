@@ -22,73 +22,85 @@
 
 ---
 
-## The Problem
+## 💡 The Story
 
-Every day, you solve the same problems. You fix the same errors. You rediscover the same patterns.
+> *"I've fixed this exact error three times this week. Why doesn't my AI assistant remember?"*
 
-**Your AI assistant forgets everything between sessions.**
+Every developer has been there. You spend 30 minutes debugging an issue, finally fix it, and move on. Two days later, you hit the same problem — and your AI assistant has completely forgotten how you solved it.
 
-## The Solution
+**Your AI is smart, but it has no memory.**
 
-Auto-Evolution gives your AI agent a **memory** that persists, learns, and evolves.
+Auto-Evolution changes that. It gives your AI agent a persistent memory that learns from every interaction, detects patterns in your work, and evolves into a smarter assistant over time.
 
 ```
-Before:  You → Agent → Output → (forgotten)
-After:   You → Agent → Output → Memory → Learning → Evolution
+Week 1:  You fix TypeError #1 → Agent forgets
+Week 2:  You fix TypeError #2 → Agent forgets  
+Week 3:  You fix TypeError #3 → Agent forgets
+
+With Auto-Evolution:
+Week 1:  You fix TypeError #1 → Agent remembers
+Week 2:  You fix TypeError #2 → Agent notices pattern
+Week 3:  TypeError #3 → Agent: "I've seen this before. Here's the fix."
 ```
+
+---
+
+## 🎯 Problems We Solve
+
+| Problem | Without Auto-Evolution | With Auto-Evolution |
+|---------|----------------------|---------------------|
+| **Repeated errors** | Fix the same bug multiple times | Agent learns from first fix |
+| **Lost knowledge** | Solutions disappear after session | Patterns persist across sessions |
+| **No personalization** | Generic responses every time | Agent adapts to your workflow |
+| **Manual documentation** | You document everything yourself | Auto-generated skill drafts |
+| **Blind spots** | No visibility into what works | Dashboard shows what's effective |
 
 ---
 
 ## ✨ Key Features
 
-| | Feature | Description |
-|---|---------|-------------|
-| 🧠 | **Three-Layer Memory** | Episodic → Semantic → Procedural knowledge, inspired by human cognition |
-| ⚡ | **Pattern Detection** | Automatically identifies workflows and solutions that repeat |
-| 📊 | **Visual Dashboard** | Real-time visualization of your agent's learning progress |
-| 🔄 | **Reflexion Loop** | Learn from both successes and failures |
-| 🎯 | **Quality Gates** | Only validated knowledge gets promoted |
-| 🌍 | **Community Sharing** | Share and reuse patterns across projects |
+<table>
+<tr>
+<td width="50%">
 
----
+### 🧠 Three-Layer Memory
+Inspired by human cognition:
+- **Episodic**: Raw events (7 days)
+- **Semantic**: Patterns (30 days)  
+- **Procedural**: Skills (permanent)
 
-## 🚀 Quick Start
+</td>
+<td width="50%">
 
-### One Command Install
+### ⚡ Pattern Detection
+Automatically identifies:
+- Repeated workflows
+- Common error solutions
+- Frequently used techniques
 
-```bash
-curl -fsSL https://raw.githubusercontent.com/ZhanlinCui/Auto-Evolution-Agent-Skills/main/install.sh | bash -s -- --with-hooks
-```
+</td>
+</tr>
+<tr>
+<td width="50%">
 
-### What Happens Next
+### 📊 Visual Dashboard
+Real-time visualization of:
+- Skill usage heatmap
+- Detected patterns
+- Evolution progress
 
-1. **Work normally** — Auto-Evolution captures silently in the background
-2. **Patterns emerge** — System detects repeated workflows and solutions
-3. **Knowledge evolves** — Validated patterns become reusable skills
-4. **Agent improves** — Your assistant gets smarter over time
+</td>
+<td width="50%">
 
----
+### 🔄 Quality Gates
+Only validated knowledge gets promoted:
+- 3+ occurrences → detected
+- Validation → approved
+- Usage → permanent skill
 
-## 🧠 Three-Layer Memory
-
-Inspired by cognitive science, Auto-Evolution implements a hierarchical memory system:
-
-```
-┌────────────────────────────────────────────────────────────────┐
-│  EPISODIC                                    TTL: 7 days       │
-│  Raw events: "Used layout.md" "Fixed error X"                  │
-└────────────────────────────────────────────────────────────────┘
-                              ↓ abstraction
-┌────────────────────────────────────────────────────────────────┐
-│  SEMANTIC                                    TTL: 30 days      │
-│  Patterns: "TypeScript errors follow pattern X"                │
-└────────────────────────────────────────────────────────────────┘
-                              ↓ validation
-┌────────────────────────────────────────────────────────────────┐
-│  PROCEDURAL                                  Permanent         │
-│  Skills: Ready-to-use knowledge for future sessions            │
-└────────────────────────────────────────────────────────────────┘
-```
+</td>
+</tr>
+</table>
 
 ---
 
@@ -100,93 +112,206 @@ See your agent's evolution in real-time:
   <img src="docs/dashboard-preview.png" alt="Dashboard Preview" width="800" />
 </p>
 
-- 📈 Session statistics and trends
-- 🧠 Memory layer visualization
-- ⚡ Detected patterns awaiting promotion
-- 💡 Evidence-based improvement suggestions
-- 📊 Skill usage heatmap
+---
 
-**Try it:** `open reports/dashboard.html`
+## 🚀 Quick Start
+
+### Step 1: Install (30 seconds)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/ZhanlinCui/Auto-Evolution-Agent-Skills/main/install.sh | bash -s -- --with-hooks
+```
+
+<details>
+<summary>📦 Alternative: Manual Installation</summary>
+
+```bash
+# Clone repository
+git clone https://github.com/ZhanlinCui/Auto-Evolution-Agent-Skills.git
+
+# Copy to your project
+cp -r Auto-Evolution-Agent-Skills/skills/evolution your-project/.claude/skills/
+
+# Make hooks executable
+chmod +x your-project/.claude/skills/evolution/hooks/*.sh
+```
+
+</details>
+
+### Step 2: Configure Hooks
+
+Add to your `.claude/settings.json`:
+
+```json
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Read|Write|Edit|Bash",
+        "hooks": [{"type": "command", "command": "bash .claude/skills/evolution/hooks/capture.sh \"$TOOL_NAME\" \"$TOOL_INPUT\""}]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [{"type": "command", "command": "bash .claude/skills/evolution/hooks/capture.sh post-bash \"$TOOL_OUTPUT\" \"$EXIT_CODE\""}]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [{"type": "command", "command": "bash .claude/skills/evolution/hooks/reflect.sh"}]
+      }
+    ]
+  }
+}
+```
+
+### Step 3: Work Normally
+
+That's it! Just use Claude Code as you always do. Auto-Evolution works silently in the background.
+
+### Step 4: Watch It Evolve
+
+```bash
+# Open the dashboard
+open .claude/skills/evolution/reports/dashboard.html
+```
 
 ---
 
-## 🏗️ Architecture
+## 📖 Usage Guide
 
-```
-evolution/
-├── SKILL.md              # Entry point
-├── config.json           # Configuration
-│
-├── memory/               # 🧠 Three-layer memory
-│   ├── episodes.jsonl    # Raw events
-│   ├── patterns.json     # Detected patterns
-│   └── drafts/           # Skill candidates
-│
-├── hooks/                # 🪝 Event capture
-│   ├── capture.sh        # Pre/post tool hooks
-│   └── reflect.sh        # Session-end analysis
-│
-├── reports/              # 📊 Visualization
-│   └── dashboard.html    # Visual dashboard
-│
-└── community/            # 🌍 Shared knowledge
-```
+### Automatic Mode (Default)
 
----
+Once installed, everything happens automatically:
 
-## 📖 Usage
-
-### Automatic Mode
-
-Once hooks are enabled, everything happens automatically:
-
-- ✅ Skill usage is tracked
-- ✅ Errors are captured with context
-- ✅ Patterns are detected and drafted
-- ✅ Session reports are generated
+| What Happens | When | Result |
+|--------------|------|--------|
+| Skill usage tracked | You read any `.md` skill file | Recorded in episodic memory |
+| Errors captured | Bash command fails | Error + context saved |
+| Patterns detected | Same action 3+ times | Pattern hypothesis created |
+| Insights generated | Session ends | Draft + suggestions created |
 
 ### Manual Commands
 
-| Command | What it does |
-|---------|--------------|
-| `/retrospective` | Generate a session review with insights |
-| `/evolve` | Promote a detected pattern to a skill |
-| `/dashboard` | Open the visual dashboard |
+| Command | What It Does | Example |
+|---------|--------------|---------|
+| `/retrospective` | Generate session review | "What did I learn today?" |
+| `/evolve` | Promote pattern to skill | "Save this fix as a skill" |
+| `/dashboard` | Open visual dashboard | "Show my evolution" |
 
 ### Example Session
 
 ```
-You: Fix this TypeScript error
-Agent: [fixes error using a specific pattern]
+You: Fix this TypeScript error: "Object is possibly undefined"
 
-You: /retrospective
-Agent: I noticed you've fixed similar TypeScript errors 4 times.
-       Pattern detected: "Type Guard for API Responses"
-       Would you like me to save this as a reusable skill?
+Agent: [fixes with optional chaining]
 
-You: Yes, /evolve it
-Agent: Created: community/yourhandle-api-type-guard.md
-       This pattern will now be available for future sessions.
+--- After 3 similar fixes ---
+
+Agent: 💡 I noticed you've fixed "possibly undefined" errors 3 times 
+       using optional chaining. Want me to save this as a reusable pattern?
+
+You: Yes, create a skill for it
+
+Agent: ✅ Created: community/typescript-optional-chaining.md
+       Next time, I'll suggest this pattern immediately.
+```
+
+---
+
+## 🧠 How It Works
+
+### The Evolution Loop
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                                                                  │
+│    📝 CAPTURE           🔍 ANALYZE           🚀 EVOLVE          │
+│    ───────────          ──────────           ─────────          │
+│    Tool usage     →     Find patterns   →    Create skills      │
+│    Errors         →     Detect repeats  →    Promote drafts     │
+│    Commands       →     Score success   →    Retire failures    │
+│                                                                  │
+│                         🧠 MEMORY                                │
+│                         ─────────                                │
+│                    Episodic → Semantic → Procedural              │
+│                                                                  │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### Three-Layer Memory
+
+| Layer | What It Stores | Retention | Example |
+|-------|---------------|-----------|---------|
+| **Episodic** | Raw events | 7 days | "Used layout.md at 14:32" |
+| **Semantic** | Patterns | 30 days | "Grid layouts need Flow + Sizing" |
+| **Procedural** | Skills | Permanent | `responsive-grid-pattern.md` |
+
+### Quality Gates
+
+Knowledge must prove itself before becoming permanent:
+
+```
+[Detected]  ──3+ occurrences──▶  [Draft]  ──validated──▶  [Approved]  ──used──▶  [Skill]
+     │                              │                          │                    │
+   Pattern                    Auto-generated              Human/AI               Permanent
+   noticed                    documentation               verified               knowledge
 ```
 
 ---
 
 ## ⚙️ Configuration
 
-All settings in one file — `config.json`:
+All settings in `evolution/config.json`:
 
 ```json
 {
   "memory": {
-    "episodic_ttl_days": 7,
-    "semantic_ttl_days": 30,
-    "pattern_threshold": 3
+    "episodic_ttl_days": 7,      // How long to keep raw events
+    "semantic_ttl_days": 30,     // How long to keep patterns
+    "pattern_threshold": 3       // Occurrences needed to detect pattern
   },
   "evolution": {
-    "auto_draft_on_error": true,
-    "auto_pattern_detection": true
+    "auto_draft_on_error": true,        // Create draft when errors occur
+    "auto_pattern_detection": true,     // Automatically detect patterns
+    "require_validation": true          // Require validation before promotion
   }
 }
+```
+
+---
+
+## 📁 Project Structure
+
+```
+.claude/skills/evolution/
+│
+├── 📄 SKILL.md                 # Entry point & documentation
+├── ⚙️ config.json              # All configuration
+│
+├── 🧠 memory/                  # Three-layer memory system
+│   ├── episodes.jsonl          # Layer 1: Raw events
+│   ├── patterns.json           # Layer 2: Detected patterns
+│   └── drafts/                 # Layer 3: Skill candidates
+│
+├── 🪝 hooks/                   # Event capture system
+│   ├── capture.sh              # Pre/post tool hooks
+│   ├── reflect.sh              # Session-end analysis
+│   └── lib.sh                  # Shared utilities
+│
+├── 📊 reports/                 # Visualization & reports
+│   ├── dashboard.html          # Visual dashboard
+│   ├── improvements.md         # Suggestions
+│   └── sessions/               # Session reports
+│
+├── 📝 templates/               # Skill templates
+│   ├── skill.md                # General skill template
+│   └── error.md                # Error solution template
+│
+└── 🌍 community/               # Your contributed skills
+    └── README.md               # Contribution guide
 ```
 
 ---
@@ -195,14 +320,16 @@ All settings in one file — `config.json`:
 
 ### Share Your Patterns
 
+Discovered a useful pattern? Share it with the community:
+
 1. Create `community/{your-handle}-{pattern-name}.md`
 2. Use templates from `templates/`
 3. Submit a PR
 
-### Quality Guidelines
+### Quality Checklist
 
 - ✅ Solves a real, repeatable problem
-- ✅ Includes "Use when..." trigger scenarios
+- ✅ Includes trigger scenarios ("Use when...")
 - ✅ Has tested, concrete examples
 - ✅ No project-specific hardcoded values
 
@@ -219,6 +346,38 @@ All settings in one file — `config.json`:
 
 ---
 
+## ❓ FAQ
+
+<details>
+<summary><strong>Does it work with other AI assistants?</strong></summary>
+
+Currently optimized for Claude Code, but the architecture is designed to be portable. Contributions for other platforms welcome!
+
+</details>
+
+<details>
+<summary><strong>Where is data stored?</strong></summary>
+
+All data stays local in your project's `.claude/skills/evolution/memory/` directory. No data is sent externally.
+
+</details>
+
+<details>
+<summary><strong>How much overhead does it add?</strong></summary>
+
+Minimal. Hooks are shell scripts that append to JSONL files. Pattern detection only runs at session end.
+
+</details>
+
+<details>
+<summary><strong>Can I disable it temporarily?</strong></summary>
+
+Yes, just remove the hooks from `.claude/settings.json`. Your memory data is preserved.
+
+</details>
+
+---
+
 ## 📄 License
 
 MIT License — see [LICENSE](LICENSE) for details.
@@ -226,11 +385,11 @@ MIT License — see [LICENSE](LICENSE) for details.
 ---
 
 <p align="center">
-  <strong>Let your agent learn. Let it evolve.</strong>
+  <strong>Stop re-solving. Start evolving.</strong>
 </p>
 
 <p align="center">
-  <a href="https://github.com/ZhanlinCui/Auto-Evolution-Agent-Skills">⭐ Star this repo</a> •
-  <a href="https://github.com/ZhanlinCui/Auto-Evolution-Agent-Skills/issues">Report Bug</a> •
-  <a href="https://github.com/ZhanlinCui/Auto-Evolution-Agent-Skills/issues">Request Feature</a>
+  <a href="https://github.com/ZhanlinCui/Auto-Evolution-Agent-Skills">⭐ Star</a> •
+  <a href="https://github.com/ZhanlinCui/Auto-Evolution-Agent-Skills/issues">Issues</a> •
+  <a href="https://github.com/ZhanlinCui/Auto-Evolution-Agent-Skills/pulls">PRs</a>
 </p>

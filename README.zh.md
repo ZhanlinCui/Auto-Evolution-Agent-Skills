@@ -22,73 +22,85 @@
 
 ---
 
-## 问题
+## 💡 故事
 
-每天，你都在解决相同的问题。修复相同的错误。重新发现相同的模式。
+> *"这个错误我这周已经修了三次了。为什么我的 AI 助手就是记不住？"*
 
-**你的 AI 助手在会话之间会遗忘一切。**
+每个开发者都经历过这种情况。你花了 30 分钟调试一个问题，终于修好了，然后继续工作。两天后，你又遇到了同样的问题——而你的 AI 助手已经完全忘记了你是怎么解决的。
 
-## 解决方案
+**你的 AI 很聪明，但它没有记忆。**
 
-Auto-Evolution 赋予你的 AI 助手**记忆**——持久的、学习的、进化的记忆。
+Auto-Evolution 改变了这一点。它赋予你的 AI 助手持久的记忆，从每次交互中学习，检测你工作中的模式，并随着时间推移进化成更智能的助手。
 
 ```
-之前:  你 → Agent → 输出 → (遗忘)
-之后:  你 → Agent → 输出 → 记忆 → 学习 → 进化
+第1周:  你修复 TypeError #1 → Agent 遗忘
+第2周:  你修复 TypeError #2 → Agent 遗忘
+第3周:  你修复 TypeError #3 → Agent 遗忘
+
+使用 Auto-Evolution:
+第1周:  你修复 TypeError #1 → Agent 记住
+第2周:  你修复 TypeError #2 → Agent 发现模式
+第3周:  遇到 TypeError #3 → Agent: "我见过这个问题，解决方法是..."
 ```
+
+---
+
+## 🎯 解决的问题
+
+| 问题 | 没有 Auto-Evolution | 有 Auto-Evolution |
+|------|---------------------|-------------------|
+| **重复错误** | 多次修复同一个 bug | Agent 从首次修复中学习 |
+| **知识丢失** | 解决方案在会话后消失 | 模式跨会话持久保存 |
+| **无个性化** | 每次都是通用回复 | Agent 适应你的工作流 |
+| **手动文档** | 你自己记录所有内容 | 自动生成技能草稿 |
+| **盲区** | 不知道什么方法有效 | 仪表盘展示效果数据 |
 
 ---
 
 ## ✨ 核心特性
 
-| | 特性 | 描述 |
-|---|------|------|
-| 🧠 | **三层记忆** | 情景 → 语义 → 程序性知识，灵感源自人类认知 |
-| ⚡ | **模式检测** | 自动识别重复出现的工作流和解决方案 |
-| 📊 | **可视化仪表盘** | 实时展示 Agent 的学习进度 |
-| 🔄 | **反思循环** | 从成功和失败中学习 |
-| 🎯 | **质量门控** | 只有验证过的知识才会被提升 |
-| 🌍 | **社区共享** | 跨项目分享和复用模式 |
+<table>
+<tr>
+<td width="50%">
 
----
+### 🧠 三层记忆
+灵感源自人类认知：
+- **情景记忆**: 原始事件 (7天)
+- **语义记忆**: 抽象模式 (30天)
+- **程序记忆**: 技能 (永久)
 
-## 🚀 快速开始
+</td>
+<td width="50%">
 
-### 一键安装
+### ⚡ 模式检测
+自动识别：
+- 重复的工作流
+- 常见错误解决方案
+- 高频使用的技巧
 
-```bash
-curl -fsSL https://raw.githubusercontent.com/ZhanlinCui/Auto-Evolution-Agent-Skills/main/install.sh | bash -s -- --with-hooks
-```
+</td>
+</tr>
+<tr>
+<td width="50%">
 
-### 接下来会发生什么
+### 📊 可视化仪表盘
+实时展示：
+- 技能使用热力图
+- 检测到的模式
+- 进化进度
 
-1. **正常工作** — Auto-Evolution 在后台静默捕获
-2. **模式浮现** — 系统检测重复的工作流和解决方案
-3. **知识进化** — 验证过的模式成为可复用技能
-4. **Agent 进步** — 你的助手随时间变得更智能
+</td>
+<td width="50%">
 
----
+### 🔄 质量门控
+只有验证过的知识才会被提升：
+- 3+ 次出现 → 检测到
+- 验证通过 → 批准
+- 持续使用 → 永久技能
 
-## 🧠 三层记忆系统
-
-灵感源自认知科学，Auto-Evolution 实现了分层记忆系统：
-
-```
-┌────────────────────────────────────────────────────────────────┐
-│  情景记忆                                    TTL: 7 天         │
-│  原始事件: "使用了 layout.md" "修复了错误 X"                    │
-└────────────────────────────────────────────────────────────────┘
-                              ↓ 抽象化
-┌────────────────────────────────────────────────────────────────┐
-│  语义记忆                                    TTL: 30 天        │
-│  模式: "TypeScript 错误遵循模式 X"                              │
-└────────────────────────────────────────────────────────────────┘
-                              ↓ 验证
-┌────────────────────────────────────────────────────────────────┐
-│  程序记忆                                    永久               │
-│  技能: 可在未来会话中直接使用的知识                              │
-└────────────────────────────────────────────────────────────────┘
-```
+</td>
+</tr>
+</table>
 
 ---
 
@@ -100,93 +112,205 @@ curl -fsSL https://raw.githubusercontent.com/ZhanlinCui/Auto-Evolution-Agent-Ski
   <img src="docs/dashboard-preview.png" alt="仪表盘预览" width="800" />
 </p>
 
-- 📈 会话统计和趋势
-- 🧠 记忆层可视化
-- ⚡ 待提升的检测模式
-- 💡 基于证据的改进建议
-- 📊 技能使用热力图
+---
 
-**体验:** `open reports/dashboard.html`
+## 🚀 快速开始
+
+### 第一步：安装（30秒）
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/ZhanlinCui/Auto-Evolution-Agent-Skills/main/install.sh | bash -s -- --with-hooks
+```
+
+<details>
+<summary>📦 备选：手动安装</summary>
+
+```bash
+# 克隆仓库
+git clone https://github.com/ZhanlinCui/Auto-Evolution-Agent-Skills.git
+
+# 复制到你的项目
+cp -r Auto-Evolution-Agent-Skills/skills/evolution your-project/.claude/skills/
+
+# 添加执行权限
+chmod +x your-project/.claude/skills/evolution/hooks/*.sh
+```
+
+</details>
+
+### 第二步：配置 Hooks
+
+添加到你的 `.claude/settings.json`：
+
+```json
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Read|Write|Edit|Bash",
+        "hooks": [{"type": "command", "command": "bash .claude/skills/evolution/hooks/capture.sh \"$TOOL_NAME\" \"$TOOL_INPUT\""}]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [{"type": "command", "command": "bash .claude/skills/evolution/hooks/capture.sh post-bash \"$TOOL_OUTPUT\" \"$EXIT_CODE\""}]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [{"type": "command", "command": "bash .claude/skills/evolution/hooks/reflect.sh"}]
+      }
+    ]
+  }
+}
+```
+
+### 第三步：正常工作
+
+就这样！像平常一样使用 Claude Code。Auto-Evolution 在后台静默运行。
+
+### 第四步：观察进化
+
+```bash
+# 打开仪表盘
+open .claude/skills/evolution/reports/dashboard.html
+```
 
 ---
 
-## 🏗️ 架构
+## 📖 使用指南
 
-```
-evolution/
-├── SKILL.md              # 入口
-├── config.json           # 配置
-│
-├── memory/               # 🧠 三层记忆
-│   ├── episodes.jsonl    # 原始事件
-│   ├── patterns.json     # 检测到的模式
-│   └── drafts/           # 技能候选
-│
-├── hooks/                # 🪝 事件捕获
-│   ├── capture.sh        # 工具前后钩子
-│   └── reflect.sh        # 会话结束分析
-│
-├── reports/              # 📊 可视化
-│   └── dashboard.html    # 可视化仪表盘
-│
-└── community/            # 🌍 共享知识
-```
+### 自动模式（默认）
 
----
+安装后，一切自动发生：
 
-## 📖 使用方法
-
-### 自动模式
-
-启用 hooks 后，一切自动发生：
-
-- ✅ 技能使用被追踪
-- ✅ 错误被捕获（带上下文）
-- ✅ 模式被检测并起草
-- ✅ 会话报告自动生成
+| 发生了什么 | 触发时机 | 结果 |
+|-----------|---------|------|
+| 技能使用被追踪 | 你读取任何 `.md` 技能文件 | 记录到情景记忆 |
+| 错误被捕获 | Bash 命令失败 | 错误 + 上下文被保存 |
+| 模式被检测 | 同一动作 3+ 次 | 创建模式假设 |
+| 洞察被生成 | 会话结束 | 创建草稿 + 建议 |
 
 ### 手动命令
 
-| 命令 | 功能 |
-|------|------|
-| `/retrospective` | 生成带洞察的会话回顾 |
-| `/evolve` | 将检测到的模式提升为技能 |
-| `/dashboard` | 打开可视化仪表盘 |
+| 命令 | 功能 | 示例 |
+|------|------|------|
+| `/retrospective` | 生成会话回顾 | "今天我学到了什么？" |
+| `/evolve` | 将模式提升为技能 | "把这个修复保存为技能" |
+| `/dashboard` | 打开可视化仪表盘 | "展示我的进化" |
 
 ### 示例会话
 
 ```
-你: 修复这个 TypeScript 错误
-Agent: [使用特定模式修复错误]
+你: 修复这个 TypeScript 错误："Object is possibly undefined"
 
-你: /retrospective
-Agent: 我注意到你已经修复了 4 次类似的 TypeScript 错误。
-       检测到模式: "API 响应的类型守卫"
-       要我把这个保存为可复用技能吗？
+Agent: [使用可选链修复]
 
-你: 好的，/evolve
-Agent: 已创建: community/yourhandle-api-type-guard.md
-       这个模式现在可以在未来的会话中使用了。
+--- 3 次类似修复后 ---
+
+Agent: 💡 我注意到你已经用可选链修复了 3 次 "possibly undefined" 错误。
+       要我把这个保存为可复用的模式吗？
+
+你: 好的，创建一个技能
+
+Agent: ✅ 已创建: community/typescript-optional-chaining.md
+       下次我会立即建议这个模式。
+```
+
+---
+
+## 🧠 工作原理
+
+### 进化循环
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                                                                  │
+│    📝 捕获              🔍 分析              🚀 进化             │
+│    ──────              ──────              ──────               │
+│    工具使用     →      发现模式      →     创建技能             │
+│    错误         →      检测重复      →     提升草稿             │
+│    命令         →      评估成功率    →     淘汰失败             │
+│                                                                  │
+│                         🧠 记忆                                  │
+│                         ──────                                   │
+│                  情景 → 语义 → 程序                              │
+│                                                                  │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### 三层记忆
+
+| 层级 | 存储内容 | 保留时间 | 示例 |
+|------|---------|---------|------|
+| **情景** | 原始事件 | 7 天 | "14:32 使用了 layout.md" |
+| **语义** | 模式 | 30 天 | "Grid 布局需要 Flow + Sizing" |
+| **程序** | 技能 | 永久 | `responsive-grid-pattern.md` |
+
+### 质量门控
+
+知识必须证明自己才能成为永久知识：
+
+```
+[检测到]  ──3+次出现──▶  [草稿]  ──验证通过──▶  [批准]  ──持续使用──▶  [技能]
+    │                      │                      │                     │
+  发现模式              自动生成文档           人工/AI验证            永久知识
 ```
 
 ---
 
 ## ⚙️ 配置
 
-所有设置集中在一个文件 — `config.json`：
+所有设置在 `evolution/config.json`：
 
 ```json
 {
   "memory": {
-    "episodic_ttl_days": 7,
-    "semantic_ttl_days": 30,
-    "pattern_threshold": 3
+    "episodic_ttl_days": 7,      // 原始事件保留时间
+    "semantic_ttl_days": 30,     // 模式保留时间
+    "pattern_threshold": 3       // 检测模式所需的出现次数
   },
   "evolution": {
-    "auto_draft_on_error": true,
-    "auto_pattern_detection": true
+    "auto_draft_on_error": true,        // 错误时创建草稿
+    "auto_pattern_detection": true,     // 自动检测模式
+    "require_validation": true          // 提升前需要验证
   }
 }
+```
+
+---
+
+## 📁 项目结构
+
+```
+.claude/skills/evolution/
+│
+├── 📄 SKILL.md                 # 入口和文档
+├── ⚙️ config.json              # 所有配置
+│
+├── 🧠 memory/                  # 三层记忆系统
+│   ├── episodes.jsonl          # 第1层：原始事件
+│   ├── patterns.json           # 第2层：检测到的模式
+│   └── drafts/                 # 第3层：技能候选
+│
+├── 🪝 hooks/                   # 事件捕获系统
+│   ├── capture.sh              # 工具前后钩子
+│   ├── reflect.sh              # 会话结束分析
+│   └── lib.sh                  # 共享工具
+│
+├── 📊 reports/                 # 可视化和报告
+│   ├── dashboard.html          # 可视化仪表盘
+│   ├── improvements.md         # 改进建议
+│   └── sessions/               # 会话报告
+│
+├── 📝 templates/               # 技能模板
+│   ├── skill.md                # 通用技能模板
+│   └── error.md                # 错误解决模板
+│
+└── 🌍 community/               # 你贡献的技能
+    └── README.md               # 贡献指南
 ```
 
 ---
@@ -195,14 +319,16 @@ Agent: 已创建: community/yourhandle-api-type-guard.md
 
 ### 分享你的模式
 
+发现了有用的模式？与社区分享：
+
 1. 创建 `community/{你的ID}-{模式名}.md`
 2. 使用 `templates/` 中的模板
 3. 提交 PR
 
-### 质量指南
+### 质量清单
 
 - ✅ 解决真实、可重复的问题
-- ✅ 包含"Use when..."触发场景
+- ✅ 包含触发场景（"Use when..."）
 - ✅ 有经过测试的具体示例
 - ✅ 无项目特定的硬编码值
 
@@ -219,6 +345,38 @@ Agent: 已创建: community/yourhandle-api-type-guard.md
 
 ---
 
+## ❓ 常见问题
+
+<details>
+<summary><strong>支持其他 AI 助手吗？</strong></summary>
+
+目前针对 Claude Code 优化，但架构设计为可移植的。欢迎为其他平台贡献！
+
+</details>
+
+<details>
+<summary><strong>数据存储在哪里？</strong></summary>
+
+所有数据都保存在项目的 `.claude/skills/evolution/memory/` 目录中。没有数据被发送到外部。
+
+</details>
+
+<details>
+<summary><strong>会增加多少开销？</strong></summary>
+
+极小。Hooks 是追加到 JSONL 文件的 shell 脚本。模式检测只在会话结束时运行。
+
+</details>
+
+<details>
+<summary><strong>可以临时禁用吗？</strong></summary>
+
+可以，只需从 `.claude/settings.json` 中移除 hooks。你的记忆数据会被保留。
+
+</details>
+
+---
+
 ## 📄 许可证
 
 MIT License — 详见 [LICENSE](LICENSE)。
@@ -226,11 +384,11 @@ MIT License — 详见 [LICENSE](LICENSE)。
 ---
 
 <p align="center">
-  <strong>让你的 Agent 学习，让它进化。</strong>
+  <strong>停止重复解决问题，开始进化。</strong>
 </p>
 
 <p align="center">
-  <a href="https://github.com/ZhanlinCui/Auto-Evolution-Agent-Skills">⭐ Star 这个仓库</a> •
-  <a href="https://github.com/ZhanlinCui/Auto-Evolution-Agent-Skills/issues">报告 Bug</a> •
-  <a href="https://github.com/ZhanlinCui/Auto-Evolution-Agent-Skills/issues">功能请求</a>
+  <a href="https://github.com/ZhanlinCui/Auto-Evolution-Agent-Skills">⭐ Star</a> •
+  <a href="https://github.com/ZhanlinCui/Auto-Evolution-Agent-Skills/issues">Issues</a> •
+  <a href="https://github.com/ZhanlinCui/Auto-Evolution-Agent-Skills/pulls">PRs</a>
 </p>
